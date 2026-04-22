@@ -1,0 +1,27 @@
+[
+  {
+    "text": "I need to call the insurance company on Monday.",
+    "source": "note1.txt",
+    "line": 1
+  },
+  {
+    "text": "I need to buy an HDMI cable.",
+    "source": "note1.txt",
+    "line": 2
+  },
+  {
+    "text": "My Docker issue was caused by a missing environment variable.",
+    "source": "note2.txt",
+    "line": 1
+  },
+  {
+    "text": "I keep delaying bank paperwork.",
+    "source": "note2.txt",
+    "line": 2
+  },
+  {
+    "text": "I want to learn AWS ECS but I have not started yet.",
+    "source": "note3.txt",
+    "line": 1
+  }
+]
