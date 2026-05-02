@@ -1,0 +1,27 @@
+The Directive (EU) 2022/2555, commonly known as NIS2 is a directive of the European Union aimed at protecting digital infrastructure, in particular critical infrastructure.
+It broadened the sectors covered by EU network and information security rules and updated incident reporting and oversight compared to the NIS1. Member States were required to transpose NIS2 by 17 October 2024, and the earlier NIS Directive was repealed on 18 October 2024.[1]
+Only 23 Member States have fully implemented the measures contained with the NIS Directive. Infringement proceedings against them to enforce the Directive have not taken place, and they are not expected to take place in the near future.[2] This failed implementation has led to the fragmentation of cybersecurity capabilities across the EU, with differing standards, incident reporting requirements and enforcement requirements being implemented in different Member States.
+From the EFTA countries (to April 2026) only Liechtenstein has fully transposed the NIS2 Directive. While the EFTA commission is conducting preparations to transpose the directive into it's legislation.[3]
+
+
+## NATIONAL IMPLEMENTATIONS
+
+
+## CZECH REPUBLIC
+It is implemented through the Act No. 264/2025 Coll. also called Zákon o kybernetické bezpečnosti (Cybersecurity law) and through another five implementing regulations.[4] The transposing legislation came into force on November 1st, 2025.[5]
+
+
+## GERMANY
+It is implemented through the Gesetz zur Umsetzung der NIS-2-Richtlinie und zur Regelung wesentlicher Grundzüge des Informationssicherheitsmanagements in der Bundesverwaltung.
+
+
+## IRELAND
+It is implemented through the National Cyber Security Bill.
+
+
+## THE NETHERLANDS
+It is implemented through the Cyberbeveiligingswet (Cbw).
+
+
+## SLOVAKIA
+It is implemented through via an amendment of the Act No. 69/2018 Coll. also called Zákon o kybernetickej bezpečnosti a o zmene a doplnení niektorých zákonov (Law on Cybersecurity and change and amendment of certain laws).[6] It came into force on November 1st, 2025.[7]

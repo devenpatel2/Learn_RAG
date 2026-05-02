@@ -1,0 +1,49 @@
+The Digital Operational Resilience Act (DORA), officially Regulation (EU) 2022/2554 is a European Union regulation.[1][2] It requires financial entities to improve their digital operational resilience.
+
+
+## AIM
+DORA aims to improve the digital operational resilience of financial entities in the EU and their ICT suppliers and create a uniform regulatory framework across the EU, in order to reduce the susceptibility to cyber threats across the entire value chain of the financial sector. In addition, DORA intends to harmonize national regulations regarding the security of IT systems in the financial sector, thus strengthening the European financial market as a whole against cyber risks and information and communications technology incidents.
+
+
+## SCOPE
+The regulation applies to financial entities and third-party suppliers of ICT services. Article 2 defines financial entities as:
+- Account information service providers
+- Administrators of critical benchmarks
+- Central counterparties
+- Central securities depositories
+- Credit institutions
+- Credit rating agencies
+- Crowdfunding service providers
+- Crypto-asset service providers and issuers of asset-referenced tokens
+- Data reporting service providers
+- Electronic money institutions
+- Institutions for occupational retirement provision
+- Insurance and reinsurance undertakings
+- insurance intermediaries, reinsurance intermediaries and ancillary insurance intermediaries
+- Investment firms
+- Management companies
+- Managers of alternative investment funds
+- Payment institutions
+- Securitisation repositories
+- Trade repositories
+- Trading venues
+The regulation explicitly does not apply to:
+- Insurance intermediaries, reinsurance intermediaries and ancillary insurance intermediaries which are microenterprises or small or medium-sized enterprises
+- Insurance and reinsurance undertakings as referred to in Article 4 of Directive 2009/138/EC
+- Institutions for occupational retirement provision which operate pension schemes which together do not have more than 15 members in total
+- Managers of alternative investment funds as referred to in Article 3(2) of Directive 2011/61/EU
+- Natural or legal persons exempted pursuant to Articles 2 and 3 of Directive 2014/65/EU
+- Post office giro institutions as referred to in Article 2(5), point (3), of Directive 2013/36/EU
+
+
+## PROPORTIONALITY PRINCIPLE
+Article 4 defines the proportionality principle, resulting in some exceptions for smaller enterprises which fall within the scope of the regulation despite their size. This allows for a simplified implementation of certain requirements in accordance with the overall risk profile of the enterprise. An example for this is the simplified ICT risk management framework according to Article 16 in combination with a regulatory technical standard (RTS).
+
+
+## STRUCTURE
+The regulation comprises 64 articles divided into 9 chapters:
+In addition, the European Supervisory Authorities develop regulatory and implementing technical standards (RTS and ITS), which, being published in the Official Journal of the European Union, also become legally binding:
+
+
+## IMPACT
+DORA will have an impact on pension schemes. Pension schemes having more than 15 but fewer than 100 members will be subject to a simplified ICT risk management framework.[3]
