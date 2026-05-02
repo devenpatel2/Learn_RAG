@@ -2,3 +2,6 @@ numpy
 requests
 sentence_transformers
 pypdf
+pydantic
+fastapi
+uvicorn
