@@ -25,6 +25,9 @@ Answer:
 
 # ---- Load notes as chunks ----
 
+# For SQuAD-style datasets, you might want to split by paragraphs or sections instead of lines.
+# This is just a simple example that treats each line as a separate chunk.
+
 
 def load_note_chunks(folder="notes"):
     chunks = []
@@ -50,7 +53,8 @@ def load_note_chunks(folder="notes"):
 
 
 # ---- Setup Chroma ----
-
+# For persistence client you can use chromadb.PersistentClient
+# chroma_client = chromadb.PersistentClient(path="./chroma_db")
 chroma_client = chromadb.Client()
 # for persistant storage, uncomment the following and comment out the above line.
 # Note: you might need to have chromadb installed with the "duckdb+parquet" extra for this to work.
@@ -130,6 +134,7 @@ def retrieve(query: str, top_k: int = 2):
                 "text": results["documents"][0][i],
                 "source": results["metadatas"][0][i]["source"],
                 "line": results["metadatas"][0][i]["line"],
+                "distance": results["distances"][0][i],
             }
         )
 
@@ -167,4 +172,5 @@ if __name__ == "__main__":
         print("Supporting notes:")
 
         for item in results:
-            print(f"- [{item['source']}:{item['line']}] {item['text']}")
+            # print(f"- [{item['source']}:{item['line']}] {item['text']}")
+            print(f"- [{item['source']}:{item['line']}] distance={item['distance']:.4f} {item['text']}")
