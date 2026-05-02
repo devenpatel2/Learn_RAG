@@ -4,10 +4,11 @@ import requests
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer, CrossEncoder
 
 LLAMA_URL = "http://192.168.178.20:11434/api/generate"
 MODEL_NAME = "llama3.1"
+RE_RANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 REWRITE_PROMPT = """
 Rewrite the user question into a clearer, more explicit search query.
@@ -46,10 +47,23 @@ app = FastAPI()
 chroma_client = chromadb.PersistentClient("./chroma_db")
 collection = chroma_client.get_or_create_collection(name="docs_smart_500")
 model = SentenceTransformer("all-MiniLM-L6-v2")
-
+reranker = CrossEncoder(RE_RANKER_MODEL)
 
 class AskRequest(BaseModel):
     question: str
+
+
+def rerank(query: str, results: list, reranker):
+    if not results:
+        return results
+
+    pairs = [(query, r["text"]) for r in results]
+    scores = reranker.predict(pairs)
+
+    for r, score in zip(results, scores):
+        r["rerank_score"] = float(score)
+
+    return sorted(results, key=lambda x: x["rerank_score"], reverse=True)
 
 
 def llama_req(prompt: str) -> str:
@@ -73,7 +87,7 @@ def rewrite_query(query: str):
     return rewritten.strip()
 
 
-def retrieve(query: str, top_k: int = 5, max_distance: Optional[float] = None):
+def retrieve(query: str, top_k: int = 15, max_distance: Optional[float] = None):
     query_embedding = model.encode([query]).tolist()
 
     results = collection.query(
@@ -91,6 +105,7 @@ def retrieve(query: str, top_k: int = 5, max_distance: Optional[float] = None):
         output.append({
             "text": results["documents"][0][i],
             "source": results["metadatas"][0][i]["source"],
+            "chunk": results["metadatas"][0][i].get("chunk"),
             "distance": distance,
         })
 
@@ -115,6 +130,7 @@ def ask(req: AskRequest):
     # search_query = rewrite_query(req.question)
     # print(f"improve query: {search_query}")
     results = retrieve(req.question)
+    results = rerank(req.question, results, reranker)[:5]
     answer = generate_answer(req.question, results)
 
     return {
@@ -210,7 +226,8 @@ def home():
         html += `
           <div class="source">
             <div class="meta">
-              ${escapeHtml(src.source)} — page ${src.page}
+              ${escapeHtml(src.source)}
+              ${src.chunk !== undefined ? " — chunk " + src.chunk : ""}
               — distance ${src.distance.toFixed(4)}
             </div>
             <div>${escapeHtml(src.text)}</div>
