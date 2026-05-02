@@ -106,7 +106,7 @@ def chunk_text_raw(text, chunk_size=500, overlap=100):
     return chunks
 
 
-def load_pdf_chunks(folder="datasets/Documents"):
+def load_pdf_chunks(folder="test_docs"):
     chunks = []
 
     for filename in sorted(os.listdir(folder)):
