@@ -5,3 +5,4 @@ pypdf
 pydantic
 fastapi
 uvicorn
+beautifulsoup4

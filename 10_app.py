@@ -1,3 +1,4 @@
+from typing import Optional
 import chromadb
 import requests
 from fastapi import FastAPI
@@ -7,6 +8,20 @@ from sentence_transformers import SentenceTransformer
 
 LLAMA_URL = "http://192.168.178.20:11434/api/generate"
 MODEL_NAME = "llama3.1"
+
+REWRITE_PROMPT = """
+Rewrite the user question into a clearer, more explicit search query.
+
+- Expand abbreviations if possible
+- Use full names of concepts
+- Keep it short (one sentence)
+- Do NOT answer the question
+
+Question:
+{query}
+
+Search query:
+"""
 
 PROMPT = """
 You are answering questions about regulatory documents.
@@ -29,7 +44,7 @@ Answer:
 app = FastAPI()
 
 chroma_client = chromadb.PersistentClient("./chroma_db")
-collection = chroma_client.get_or_create_collection(name="test_documents")
+collection = chroma_client.get_or_create_collection(name="docs_smart_500")
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 
@@ -51,7 +66,14 @@ def llama_req(prompt: str) -> str:
     return response.json()["response"].strip()
 
 
-def retrieve(query: str, top_k: int = 5, max_distance: float = 0.85):
+def rewrite_query(query: str):
+    # Rewrite the user question into a clearer search query for better retrieval results
+    prompt = REWRITE_PROMPT.format(query=query)
+    rewritten = llama_req(prompt)
+    return rewritten.strip()
+
+
+def retrieve(query: str, top_k: int = 5, max_distance: Optional[float] = None):
     query_embedding = model.encode([query]).tolist()
 
     results = collection.query(
@@ -59,18 +81,18 @@ def retrieve(query: str, top_k: int = 5, max_distance: float = 0.85):
         n_results=top_k,
     )
 
-    output = []
+    output: list[dict] = []
 
     for i in range(len(results["documents"][0])):
         distance = results["distances"][0][i]
+        if max_distance and distance >= max_distance:
+            continue
 
-        if distance <= max_distance:
-            output.append({
-                "text": results["documents"][0][i],
-                "source": results["metadatas"][0][i]["source"],
-                "page": results["metadatas"][0][i]["page"],
-                "distance": distance,
-            })
+        output.append({
+            "text": results["documents"][0][i],
+            "source": results["metadatas"][0][i]["source"],
+            "distance": distance,
+        })
 
     return output
 
@@ -80,7 +102,7 @@ def generate_answer(query: str, results):
         return "I could not find a strong match in the documents."
 
     context = "\n".join(
-        f"- [{item['source']}:{item['page']}] {item['text']}"
+        f"- [{item['source']}:] {item['text']}"
         for item in results
     )
 
@@ -90,6 +112,8 @@ def generate_answer(query: str, results):
 
 @app.post("/ask")
 def ask(req: AskRequest):
+    # search_query = rewrite_query(req.question)
+    # print(f"improve query: {search_query}")
     results = retrieve(req.question)
     answer = generate_answer(req.question, results)
 
